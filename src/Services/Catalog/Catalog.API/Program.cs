@@ -1,7 +1,5 @@
 
 
-using Carter;
-
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -12,6 +10,8 @@ builder.Services.AddCarter();
 builder.Services.AddMediatR(configs =>
 {
     configs.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+    
+    configs.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
 builder.Services.AddMarten(opts =>
@@ -19,6 +19,7 @@ builder.Services.AddMarten(opts =>
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();
 
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
 

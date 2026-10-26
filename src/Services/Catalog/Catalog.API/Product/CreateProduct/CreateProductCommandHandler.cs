@@ -1,4 +1,5 @@
-﻿namespace Catalog.API.Product.CreateProduct
+﻿
+namespace Catalog.API.Product.CreateProduct
 {
 
     public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price)
@@ -6,17 +7,23 @@
 
     public record CreateProductCommandResult(Guid Id);
 
+    public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+    {
+        public CreateProductCommandValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Product name is required.");
+            RuleFor(x => x.Category).NotEmpty().WithMessage("Product category is required.");
+            RuleFor(x => x.Description).NotEmpty().WithMessage("Product description is required.");
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("Product price must be greater than zero.");
+        }
+    }
+
     internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductCommandResult>
     {
         public async Task<CreateProductCommandResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            // create product entity from command object
-            // save product entity to database
-            // return CreateProductCommandResult result
-
             var product = new Models.Product
             {
-                //Id = Guid.NewGuid(),
                 Name = command.Name,
                 Category = command.Category,
                 Description = command.Description,
