@@ -11,20 +11,13 @@ namespace Catalog.API.Product.DeleteProduct
         {
             app.MapDelete("/products/{id:guid}", async (Guid Id, ISender sender) =>
             {
-                try
-                {
-                    var command = new DeleteProductCommand(Id);
+                var command = new DeleteProductCommand(Id);
 
-                    var result = await sender.Send(command);
+                var result = await sender.Send(command);
 
-                    var response = result.Adapt<DeleteProductEndpointResponse>();
+                var response = result.Adapt<DeleteProductEndpointResponse>();
 
-                    return Results.Ok(response);
-                }
-                catch (Exception ex)
-                {
-                    return Results.BadRequest(ex.Message);
-                }
+                return Results.Ok(response);
 
             })
             .WithDescription("Delete Product")
