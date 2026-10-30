@@ -84,7 +84,6 @@ namespace Catalog.API.Data
                     Price = 240.00M,
                     Category = new List<string> { "Camera" }
                 }
-
             };
        }
     }
