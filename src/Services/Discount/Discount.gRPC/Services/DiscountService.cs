@@ -1,5 +1,4 @@
-﻿using Grpc.Core;
-
+﻿
 namespace Discount.gRPC.Services
 {
     public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
