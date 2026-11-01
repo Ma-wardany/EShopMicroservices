@@ -20,12 +20,22 @@ builder.Services.AddMarten(opts =>
 
 }).UseLightweightSessions();
 
-builder.Services.AddScoped<IBasketRepository,  BasketRepository>();
 
 builder.Services.AddExceptionHandler<CustomExcptionHandler>();
 
 builder.Services.AddHealthChecks()
-    .AddNpgSql(builder.Configuration.GetConnectionString("Database"));
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
+
+
+builder.Services.AddStackExchangeRedisCache(opts =>
+{
+    opts.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
+
+builder.Services.AddScoped<IBasketRepository,  BasketRepository>();
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
 
 var app = builder.Build();

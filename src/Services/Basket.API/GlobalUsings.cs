@@ -11,3 +11,5 @@ global using Basket.API.Data;
 global using BuildingBlocks.Excptions.Handler;
 global using HealthChecks.UI.Client;
 global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+global using Microsoft.Extensions.Caching.Distributed;
+global using System.Text.Json;
