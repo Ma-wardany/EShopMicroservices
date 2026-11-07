@@ -1,4 +1,6 @@
 
+using Discount.gRPC;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +22,17 @@ builder.Services.AddMarten(opts =>
 
 }).UseLightweightSessions();
 
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+})
+.ConfigurePrimaryHttpMessageHandler(handlers =>
+{
+    var handler = new HttpClientHandler();
+    handler.ServerCertificateCustomValidationCallback = 
+    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+    return handler;
+});
 
 builder.Services.AddExceptionHandler<CustomExcptionHandler>();
 
