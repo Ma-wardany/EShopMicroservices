@@ -21,7 +21,7 @@
             PymentMethod = paymentMethod;
         }
 
-        protected static Payment Of(string cardName, string cardNumber, string expiration, string cvv, int paymentMethod)
+        public static Payment Of(string cardName, string cardNumber, string expiration, string cvv, int paymentMethod)
         {
             return new Payment(cardName, cardNumber, expiration, cvv, paymentMethod);
         }
