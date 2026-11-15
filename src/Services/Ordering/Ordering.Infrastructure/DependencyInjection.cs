@@ -1,4 +1,6 @@
 ﻿
+using Ordering.Application.Data;
+
 namespace Ordering.Infrastructure
 {
     public static class DependencyInjection
@@ -15,6 +17,9 @@ namespace Ordering.Infrastructure
                 options.AddInterceptors(serviceProvider.GetServices<ISaveChangesInterceptor>());
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
             return services;
         }
     }
