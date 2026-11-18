@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices()
                 .AddInfrastructureServices(builder.Configuration)
-                .AddOrderingApi();
+                .AddOrderingApi(builder.Configuration);
 
 var app = builder.Build();
 
